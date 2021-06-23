@@ -1,1 +1,1 @@
-# pong-game-python
+# Pong Game in Python using Turtle module
