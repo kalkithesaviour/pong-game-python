@@ -24,6 +24,7 @@ screen.onkey(l_paddle.go_up, "w")
 screen.onkey(l_paddle.go_down, "s")
 
 game_is_on = True
+paddle_hit = 0
 while game_is_on:
     screen.update()
     time.sleep(ball.move_speed)
@@ -34,22 +35,21 @@ while game_is_on:
         ball.bounce_y()
 
     # Detect collision with paddle
-    if ball.xcor() > 320 and ball.distance(r_paddle) < 50 or ball.xcor() < -320 and ball.distance(l_paddle) < 50:
+    if paddle_hit == 0 and (ball.xcor() > 320 and ball.distance(r_paddle) < 50 or ball.xcor() < -320 and
+                            ball.distance(l_paddle) < 50):
         ball.bounce_x()
-        ball.increase_speed()
+        paddle_hit = 1
+    elif -320 < ball.xcor() < 320:
+        paddle_hit = 0
 
     # Detect when R paddle misses
     if ball.xcor() > 380:
         ball.reset_position()
         scoreboard.l_point()
 
-    # Detect when L paddle misses:
+    # Detect when L paddle misses
     if ball.xcor() < -380:
         ball.reset_position()
         scoreboard.r_point()
-
-    screen.update()
-
-print(ball.x_move)
 
 screen.exitonclick()
